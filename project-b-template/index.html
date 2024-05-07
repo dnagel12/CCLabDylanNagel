@@ -4,31 +4,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Project</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
 
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .title {
+      text-align: center;
+    }
+
+    .description {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    #canvasContainer {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .body {
+      margin-bottom: 20px;
+    }
+  </style>
   <script src="js/lib/p5.js"></script>
   <script src="js/lib/p5.sound.js"></script>
 </head>
 
 <body>
-  <h1 class="Title">Project</h1>
-  <h3 class="description"> Description</h3>
-  <div id="canvasContainer">
-    <!-- p5 canvas will be appended here! -->
-
+  <div class="container">
+    <h1 class="title">Soccer</h1>
+    <h3 class="description">Use the cursor to kick the ball into the goal! Change the ball by clicking</h3>
+    <div id="canvasContainer">
+      <!-- p5 canvas will be appended here! -->
+    </div>
+    <a href="page2.html"> Go to Page 2</a>
+    <h3 class="body">
+      <strong>Explanation:</strong> For my project, I had the intention of developing a project that would revolve
+      around my love for soccer, a sport that I have been actively participating in for sixteen years. My goal was to
+      provide a visual representation of the many different places I have visited, complete with photographs that are
+      relevant to the topic and the countries that belong to it.
+    </h3>
   </div>
-
-
-  <a href="page2.html">Link Text</a>
   <script src="js/script.js"></script>
-  <h3 class="Body">
-    <strong> Explaination: </strong> Blahblahblah
-  </h3>
-
 </body>
-
-
 
 </html>

@@ -1,20 +1,30 @@
 let ballImages = [];
-let goalImages= [];
+let goalImages = [];
 let ballIndex = 0;
 let ballImage;
 let balls = [];
+let goalIndex = 0;
 let goalImage;
+let goalReached = false;
+let goalTimer = 0;
+let cursorImage;
+let cursorSize = 30;
+const goalDuration = 1;
 
 function preload() {
   ballImages.push(loadImage('ball1.png'));
   ballImages.push(loadImage('ball2.png'));
   ballImages.push(loadImage('ball3.png'));
-  goalImage = loadImage('goal.png');
+  goalImages.push(loadImage('goal1.png'));
+  goalImages.push(loadImage('goal2.png'));
+  goalImages.push(loadImage('goal3.png'));
+  cursorImage = loadImage('cursor.png');
 }
 
 function setup() {
   let cnv = createCanvas(600, 400);
-  cnv.parent("canvasContainer")
+  cnv.parent("canvasContainer");
+  noCursor();
   frameRate(60);
   createBalls(1);
 }
@@ -24,13 +34,27 @@ function draw() {
   drawGrassField();
   lineTheField();
   drawBalls();
-  push();
-  scale(0.5)
-  image(goalImage, 100, 100)
-  pop();
+  let cursorX = mouseX - cursorSize / 2
+  let cursorY = mouseY - cursorSize / 2;
+  image(cursorImage, cursorX, cursorY, cursorSize, cursorSize);
+
+  if (goalReached) {
+
+    image(
+      goalImages[goalIndex],
+      width / 2 - goalImages[goalIndex].width / 2,
+      height / 2 - goalImages[goalIndex].height / 2
+    );
+
+
+    goalTimer += deltaTime / 1000;
+
+    if (goalTimer >= goalDuration) {
+      goalReached = false;
+      goalTimer = 0;
+    }
+  }
 }
-
-
 
 function createBalls(numBalls) {
   let Ball = {
@@ -45,7 +69,8 @@ function createBalls(numBalls) {
 }
 
 function mouseClicked() {
-  ballIndex = (ballIndex + 1) % ballImages.length; // Cycle through the available images
+  ballIndex = (ballIndex + 1) % ballImages.length;
+  goalIndex = (goalIndex + 1) % goalImages.length;
   balls[0].image = ballImages[ballIndex];
 }
 
@@ -54,12 +79,15 @@ function drawBalls() {
     let ball = balls[i];
     image(ball.image, ball.x - ball.r, ball.y - ball.r, ball.r * 2, ball.r * 2);
 
-    // Check if the ball hits the goals
+
     if (
       (ball.x < 20 + ball.r && ball.y > height / 2 - 21 && ball.y < height / 2 + 21) ||
       (ball.x > width - 20 - ball.r && ball.y > height / 2 - 21 && ball.y < height / 2 + 21)
     ) {
-      // Show "goal!!!" text
+      ball.x = width / 2
+      ball.y = height / 2
+      goalReached = true;
+
       textSize(32);
       fill(255);
       textAlign(CENTER, CENTER);
@@ -68,14 +96,14 @@ function drawBalls() {
 
     if (dist(mouseX, mouseY, ball.x, ball.y) < ball.r) {
       if (mouseX < ball.x) {
-        ball.xspeed = abs(ball.xspeed); // Move to the right
+        ball.xspeed = abs(ball.xspeed);
       } else {
-        ball.xspeed = -abs(ball.xspeed); // Move to the left
+        ball.xspeed = -abs(ball.xspeed);
       }
       if (mouseY < ball.y) {
-        ball.yspeed = abs(ball.yspeed); // Move downwards
+        ball.yspeed = abs(ball.yspeed);
       } else {
-        ball.yspeed = -abs(ball.yspeed); // Move upwards
+        ball.yspeed = -abs(ball.yspeed);
       }
     }
 
@@ -103,7 +131,7 @@ function drawGrassField() {
 }
 
 function lineTheField() {
-  stroke(255, 255, 255); // white
+  stroke(255, 255, 255);
   noFill();
 
   rect(20, 20, 560, 360);
