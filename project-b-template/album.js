@@ -9,6 +9,7 @@ function preload() {
     images.push(loadImage('image4.png'));
    
     images.push(loadImage('image5.png'));
+    images.push(loadImage('image6.png'));
 }
 
 function setup() {
